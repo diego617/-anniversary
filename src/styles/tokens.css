@@ -1,0 +1,23 @@
+:root {
+  --color-ivory: #f7f2ec;
+  --color-wine: #5a1f2d;
+  --color-wine-deep: #35131d;
+  --color-rose: #b9787e;
+  --color-gold: #c9a36a;
+  --color-charcoal: #251c1e;
+  --color-warm-white: #fffdfc;
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+
+  --text-label: clamp(0.68rem, 0.63rem + 0.2vw, 0.84rem);
+  --text-body: clamp(0.94rem, 0.89rem + 0.25vw, 1.15rem);
+  --text-title: clamp(2.45rem, 1.65rem + 4.25vw, 6.25rem);
+  --text-number: clamp(6rem, 3rem + 15vw, 13rem);
+
+  --content-max-width: 76rem;
+  --scene-padding-inline: clamp(1.25rem, 4vw, 5rem);
+  --scene-padding-block: clamp(1.25rem, 4vh, 4rem);
+  --radius-card: 1.5rem;
+  --transition-scene: 900ms;
+}

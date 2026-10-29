@@ -1,0 +1,24 @@
+---
+type Props = {
+  id: string;
+  index: number;
+  active?: boolean;
+  variant?: string;
+  labelledBy: string;
+};
+
+const { id, index, active = false, variant = "default", labelledBy } = Astro.props;
+---
+
+<section
+  class:list={["scene", `scene--${variant}`]}
+  id={id}
+  data-scene
+  data-scene-index={index}
+  data-active={String(active)}
+  aria-labelledby={labelledBy}
+  aria-hidden={!active}
+  inert={!active}
+>
+  <slot />
+</section>

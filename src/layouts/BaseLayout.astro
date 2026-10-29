@@ -1,0 +1,42 @@
+---
+import "../styles/global.css";
+import { getImage } from "astro:assets";
+import { anniversaryContent } from "../data/anniversary";
+
+type Props = {
+  title: string;
+  description: string;
+};
+
+const { title, description } = Astro.props;
+const basePath = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const heroPreload = await getImage({
+  src: anniversaryContent.images.hero.src,
+  width: 768,
+  format: "avif",
+  quality: 68,
+});
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#5a1f2d" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={`${basePath}social-preview.jpg`} />
+    <link rel="preload" as="image" href={heroPreload.src} type="image/avif" fetchpriority="high" />
+    <link rel="icon" type="image/svg+xml" href={`${basePath}favicon.svg`} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

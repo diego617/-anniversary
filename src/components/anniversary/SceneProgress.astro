@@ -1,0 +1,28 @@
+---
+type Props = {
+  scenes: readonly { id: string; announcement: string }[];
+};
+
+const { scenes } = Astro.props;
+---
+
+<nav class="scene-progress" aria-label="Progreso de la historia">
+  <ol>
+    {scenes.map((scene, index) => (
+      <li>
+        <button
+          type="button"
+          class="scene-progress__dot"
+          data-progress-index={index}
+          aria-label={`Ir a la escena ${index + 1}: ${scene.announcement}`}
+          aria-current={index === 0 ? "step" : undefined}
+        >
+          <span>{String(index + 1).padStart(2, "0")}</span>
+        </button>
+      </li>
+    ))}
+  </ol>
+  <span class="scene-progress__track" aria-hidden="true">
+    <span data-progress-fill></span>
+  </span>
+</nav>

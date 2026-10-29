@@ -1,0 +1,53 @@
+---
+import { Picture } from "astro:assets";
+import type { ImageConfig } from "../../types/anniversary";
+
+type Props = {
+  image: ImageConfig;
+  eager?: boolean;
+  variant?: "cover" | "soft" | "future" | "finale";
+  class?: string;
+};
+
+const { image, eager = false, variant = "cover", class: className = "" } = Astro.props;
+const focalStyle = `--focal-mobile:${image.focalPoint.mobile};--focal-desktop:${image.focalPoint.desktop}`;
+const isPortrait = image.displayMode === "portrait";
+const responsiveSizes = isPortrait ? "(min-width: 768px) 48vw, 100vw" : "100vw";
+---
+
+<div
+  class:list={[
+    "scene-background",
+    `scene-background--${variant}`,
+    isPortrait && "scene-background--image-portrait",
+    className,
+  ]}
+  data-image-display={image.displayMode ?? "cover"}
+>
+  {isPortrait && (
+    <div class="scene-background__portrait-backdrop" aria-hidden="true">
+      <Picture
+        src={image.src}
+        formats={["webp"]}
+        widths={[1200]}
+        sizes="100vw"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  )}
+  <Picture
+    class="scene-background__primary-image"
+    src={image.src}
+    formats={["avif", "webp"]}
+    widths={[480, 768, 1200, 1800, 2400]}
+    sizes={responsiveSizes}
+    alt={image.alt}
+    loading={eager ? "eager" : "lazy"}
+    fetchpriority={eager ? "high" : "auto"}
+    decoding={eager ? "sync" : "async"}
+    style={focalStyle}
+  />
+  <div class="scene-background__veil"></div>
+</div>

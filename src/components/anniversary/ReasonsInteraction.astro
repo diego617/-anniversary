@@ -1,0 +1,32 @@
+---
+type Props = {
+  reasons: readonly string[];
+  instruction: string;
+};
+
+const { reasons, instruction } = Astro.props;
+---
+
+<div class="reasons-interaction" data-reasons data-reasons-values={JSON.stringify(reasons)}>
+  <p class="reasons-interaction__instruction" data-animate>
+    {instruction}
+  </p>
+  <button
+    class="heart-button"
+    type="button"
+    data-heart-button
+    aria-label="Descubrir la primera razón"
+    aria-describedby="reason-counter"
+  >
+    <svg viewBox="0 0 64 58" aria-hidden="true">
+      <path d="M32 54.3 7.7 31.2C-7.7 16.5 15.2-6.4 30.1 8.8L32 10.7l1.9-1.9C48.8-6.4 71.7 16.5 56.3 31.2L32 54.3Z"></path>
+    </svg>
+    <span class="heart-button__halo"></span>
+  </button>
+  <div class="reason-copy" aria-live="polite" aria-atomic="true">
+    <p data-reason-text>Una razón especial te espera.</p>
+    <span id="reason-counter" data-reason-counter>
+      Razón 0 de {reasons.length}
+    </span>
+  </div>
+</div>

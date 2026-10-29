@@ -1,0 +1,192 @@
+---
+import { Picture } from "astro:assets";
+import { anniversaryContent as content } from "../../data/anniversary";
+import ReasonsInteraction from "./ReasonsInteraction.astro";
+import Scene from "./Scene.astro";
+import SceneBackground from "./SceneBackground.astro";
+import SceneControls from "./SceneControls.astro";
+import SceneProgress from "./SceneProgress.astro";
+import ScreenReaderStatus from "../ui/ScreenReaderStatus.astro";
+
+const initialStatus = `Escena 1 de ${content.scenes.length}: ${content.scenes[0].announcement}`;
+---
+
+<main class="anniversary" data-anniversary-root data-scene-count={content.scenes.length}>
+  <a class="skip-link" href="#intro-title">
+    Ir al contenido
+  </a>
+  <div class="anniversary__grain" aria-hidden="true"></div>
+
+  {content.scenes.map((scene, index) => (
+    <Scene
+      id={scene.id}
+      index={index}
+      active={index === 0}
+      variant={scene.type === "editorial" ? scene.variant : scene.type}
+      labelledBy={`${scene.id}-title`}
+    >
+      {scene.type === "cover" && (
+        <>
+          <SceneBackground image={content.images[scene.imageKey]} eager variant="cover" />
+          <div class="scene__content scene__content--cover">
+            <p class="eyebrow" data-animate>
+              {scene.label}
+            </p>
+            <h1 id={`${scene.id}-title`} class="display-title" data-animate>
+              {scene.title}
+            </h1>
+            <p class="lede" data-animate>
+              {scene.body}
+            </p>
+            <p class="date-line" data-animate>
+              {scene.date}
+            </p>
+            <button class="primary-action" type="button" data-go-next data-animate>
+              <span>{scene.action}</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m9.5 5 7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+          <p class="swipe-hint" aria-hidden="true">
+            <span></span> Desliza para continuar
+          </p>
+        </>
+      )}
+
+      {scene.type === "editorial" && (
+        <>
+          <SceneBackground
+            image={content.images[scene.imageKey]}
+            variant={scene.variant === "beginning" ? "soft" : "future"}
+          />
+          <div
+            class:list={[
+              "scene__content",
+              "scene__content--editorial",
+              `editorial--${scene.variant}`,
+            ]}
+          >
+            <div class="editorial__copy">
+              <p class="eyebrow" data-animate>
+                {scene.label}
+              </p>
+              <h2 id={`${scene.id}-title`} class="scene-title" tabindex="-1" data-animate>
+                {scene.title}
+              </h2>
+              <p class="body-copy" data-animate>
+                {scene.body}
+              </p>
+              <blockquote data-animate>{scene.quote}</blockquote>
+            </div>
+          </div>
+        </>
+      )}
+
+      {scene.type === "memories" && (
+        <>
+          <div class="memory-visual">
+            {scene.imageKeys.map((imageKey, imageIndex) => (
+              <figure
+                class:list={["memory-visual__image", imageIndex === 0 && "is-visible"]}
+                data-memory-image
+              >
+                <Picture
+                  src={content.images[imageKey].src}
+                  formats={["avif", "webp"]}
+                  widths={[480, 768, 1200, 1600]}
+                  sizes="(min-width: 900px) 58vw, 100vw"
+                  alt={content.images[imageKey].alt}
+                  loading="lazy"
+                  style={`--focal-mobile:${content.images[imageKey].focalPoint.mobile};--focal-desktop:${content.images[imageKey].focalPoint.desktop}`}
+                />
+                <figcaption>{scene.captions[imageIndex]}</figcaption>
+              </figure>
+            ))}
+            <div class="memory-visual__veil"></div>
+          </div>
+          <div class="scene__content scene__content--memories">
+            <div class="memories__copy">
+              <p class="eyebrow" data-animate>
+                {scene.label}
+              </p>
+              <h2 id={`${scene.id}-title`} class="scene-title" tabindex="-1" data-animate>
+                {scene.title}
+              </h2>
+              <p class="body-copy" data-animate>
+                {scene.body}
+              </p>
+              <blockquote data-animate>{scene.quote}</blockquote>
+            </div>
+          </div>
+        </>
+      )}
+
+      {scene.type === "reasons" && (
+        <div class="scene__content scene__content--reasons">
+          <div class="reasons-heading">
+            <span class="reasons-number" aria-hidden="true" data-animate>
+              {scene.number}
+            </span>
+            <h2 id={`${scene.id}-title`} tabindex="-1" data-animate>
+              <span class="sr-only">Veinticuatro </span>
+              {scene.title}
+            </h2>
+          </div>
+          <ReasonsInteraction reasons={content.reasons} instruction={scene.instruction} />
+        </div>
+      )}
+
+      {scene.type === "finale" && (
+        <>
+          <SceneBackground image={content.images[scene.imageKey]} variant="finale" />
+          <div class="scene__content scene__content--finale">
+            <div class="finale__letter">
+              <h2 id={`${scene.id}-title`} class="finale__title" tabindex="-1" data-animate>
+                {scene.title}
+              </h2>
+              {scene.paragraphs.map((paragraph) => (
+                <p class="body-copy" data-animate>
+                  {paragraph}
+                </p>
+              ))}
+              <p class="finale__closing" data-animate>
+                {scene.closing}
+              </p>
+              <p class="finale__signature" data-signature>
+                {scene.signature}
+              </p>
+              <button
+                class="primary-action primary-action--light"
+                type="button"
+                data-restart
+                data-animate
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 11a8 8 0 1 1 2.34 5.66M4 11V5m0 6h6" />
+                </svg>
+                <span>{scene.action}</span>
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+    </Scene>
+  ))}
+
+  <div class="anniversary__chrome">
+    <div class="brand-mark" aria-hidden="true">
+      <span>D</span>
+      <i></i>
+      <span>M</span>
+    </div>
+    <SceneProgress scenes={content.scenes} />
+    <SceneControls />
+  </div>
+
+  <ScreenReaderStatus initial={initialStatus} />
+</main>
+
+<script>
+  import "../../scripts/anniversary-controller";
+</script>
