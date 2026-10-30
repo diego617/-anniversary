@@ -18,9 +18,9 @@ const { reasons, instruction } = Astro.props;
     aria-label="Descubrir la primera razón"
     aria-describedby="reason-counter"
   >
-    <svg viewBox="0 0 64 58" aria-hidden="true">
-      <path d="M32 54.3 7.7 31.2C-7.7 16.5 15.2-6.4 30.1 8.8L32 10.7l1.9-1.9C48.8-6.4 71.7 16.5 56.3 31.2L32 54.3Z"></path>
-    </svg>
+    <span class="heart-button__icon" aria-hidden="true">
+      ♥
+    </span>
     <span class="heart-button__halo"></span>
   </button>
   <div class="reason-copy" aria-live="polite" aria-atomic="true">
