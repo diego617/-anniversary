@@ -116,7 +116,7 @@ class AnniversaryExperience {
   private bindReasons(): void {
     const container = this.root.querySelector<HTMLElement>("[data-reasons]");
     if (!container) return;
-    const button = container.querySelector<HTMLButtonElement>("[data-heart-button]");
+    const button = container.querySelector<HTMLButtonElement>("[data-reason-trigger]");
     const text = container.querySelector<HTMLElement>("[data-reason-text]");
     const counter = container.querySelector<HTMLElement>("[data-reason-counter]");
     const values = JSON.parse(container.dataset.reasonsValues ?? "[]") as string[];

@@ -12,16 +12,16 @@ const { reasons, instruction } = Astro.props;
     {instruction}
   </p>
   <button
-    class="heart-button"
+    class="reason-trigger"
     type="button"
-    data-heart-button
+    data-reason-trigger
     aria-label="Descubrir la primera razón"
     aria-describedby="reason-counter"
   >
-    <span class="heart-button__icon" aria-hidden="true">
+    <span class="reason-trigger__icon" aria-hidden="true">
       ♥
     </span>
-    <span class="heart-button__halo"></span>
+    <span class="reason-trigger__halo"></span>
   </button>
   <div class="reason-copy" aria-live="polite" aria-atomic="true">
     <p data-reason-text>Una razón especial te espera.</p>
