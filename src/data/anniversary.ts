@@ -61,7 +61,7 @@ export const anniversaryContent = {
       variant: "beginning",
     },
     {
-      type: "memories",
+      type: "memories", 
       id: "memories",
       announcement: "Los recuerdos",
       label: "CAPÍTULO II · LO QUE HEMOS VIVIDO",
